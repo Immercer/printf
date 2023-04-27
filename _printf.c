@@ -1,6 +1,5 @@
 #include <stdarg.h>
 #include "main.h"
-#include <stdio.h>
 
 int _printf(const char *format, ...)
 {
@@ -53,9 +52,3 @@ int _printf(const char *format, ...)
 	
 }
 
-int main(void)
-{
-	_printf("hello");
-	_putchar('\0');
-	_printf("%%");
-}
