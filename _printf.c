@@ -47,6 +47,16 @@ int _printf(const char *format, ...)
 				}
 				i++;
 			}
+			else if (format[i + 1] == 'd' || format[i + 1] == 'i')
+			{
+				int num = va_arg(args, int);
+				char str[12];
+
+				itoa(num, str);
+				_puts(str);
+				char_count += _strlen(str);
+				i++;
+			}
 			else if (format[i + 1] == '%')
 			{
 				_putchar('%');
