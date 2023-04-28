@@ -70,9 +70,3 @@ int _printf(const char *format, ...)
 
 	return (char_count);
 }
-
-int main()
-{
-	char *str = "some crazy men";
-	printf("a single character  %c", 'p');
-}
