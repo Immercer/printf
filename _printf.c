@@ -1,6 +1,6 @@
 #include <stdarg.h>
-#include "header.h"
-#include <stdio.h>
+#include "main.h"
+
 /**
  * _printf - prints output according to a format
  * @format: format string

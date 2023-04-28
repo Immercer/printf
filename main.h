@@ -1,5 +1,5 @@
-#ifndef HEADER_H
-#define HEARDER_H
+#ifndef MAIN_H
+#define MAIN_H
 
 #include <stdarg.h>
 #include <stdlib.h>
@@ -9,4 +9,4 @@ int _printf(const char *format, ...);
 char* (*get_func(char c))(va_list);
 int _puts(char *str);
 
-#endif /* end of HEADER_H */
+#endif /* end of MAIN_H */
