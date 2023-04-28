@@ -1,70 +1,81 @@
-#include <stdarg.h>
 #include "main.h"
 
 /**
- * _printf - prints output according to a format
- * @format: format string
- * Return: number of characters printed
+ * _printf - mini printf version
+ * @format: initial string with all identifiers
+ * Return: strings with identifiers expanded
  */
 int _printf(const char *format, ...)
 {
-    int char_count = 0;
-    int i = 0;
-    va_list args;
+	int total_len = 0, i = 0, j = 0;
+	va_list list;
+	char *str;
+	char* (*f)(va_list);
 
-    va_start(args, format);
+	if (format == NULL)
+		return (-1);
 
-    while (format[i])
-    {
-        if (format[i] == '%' && format[i + 1] != '\0')
-        {
-            if (format[i + 1] == 'c')
-            {
-                char c = va_arg(args, int);
-                _putchar(c);
-                char_count++;
-                i++;
-            }
-            else if (format[i + 1] == 's')
-            {
-                char *s = va_arg(args, char *);
-                if (s != NULL)
-                {
-                    while (*s)
-                    {
-                        _putchar(*s);
-                        char_count++;
-                        s++;
-                    }
-                }
-                else
-                {
-                    _puts("(null)");
-                    char_count += 6;
-                }
-                i++;
-            }
-            else if (format[i + 1] == '%')
-            {
-                _putchar('%');
-                char_count++;
-                i++;
-            }
-            else
-            {
-                _putchar(format[i]);
-                char_count++;
-            }
-        }
-        else
-        {
-            _putchar(format[i]);
-            char_count++;
-        }
-        i++;
-    }
-    va_end(args);
+	va_start(list, format);
 
-    return (char_count);
+	while (format[i] != '\0')
+	{
+		if (format[i] != '%') /* print character if not % */
+		{
+			_putchar(format[i]);
+			i++;
+			total_len++;
+		}
+		else /* if %, find function */
+		{
+			i++;
+			if (format[i] == '\0') /* handle single ending % */
+			{
+				va_end(list);
+				return (-1);
+			}
+			if (format[i] == '%') /* handle double %'s */
+			{
+				_putchar(format[i]);
+				i++;
+				total_len++;
+			}
+			else
+			{
+				f = get_func(format[i]); /* grab function */
+				if (f == NULL)  /* handle fake id */
+				{
+					_putchar('%');
+					_putchar(format[i]);
+					i++;
+					total_len += 2;
+				}
+				else /* return string, print */
+				{
+					str = f(list);
+					if (str == NULL)
+					{
+						va_end(list);
+						return (-1);
+					}
+					if (format[i] == 'c' && str[0] == '\0')
+					{
+						_putchar('\0');
+						i++;
+						total_len++;
+					}
+					j = 0;
+					while (str[j] != '\0')
+					{
+						_putchar(str[j]);
+						j++;
+						total_len++;
+					}
+					free(str);
+				}
+			}
+		}
+	}
+	va_end(list);
+	return (total_len);
 }
 
