@@ -1,6 +1,6 @@
 #include <stdarg.h>
-#include "main.h"
-
+#include "header.h"
+#include <stdio.h>
 /**
  * _printf - prints output according to a format
  * @format: format string
@@ -15,7 +15,6 @@ int _printf(const char *format, ...)
 	va_list args;
 
 	va_start(args, format);
-
 	while (format[i])
 	{
 		if (format[i] == '%' && format[i + 1] != '\0')
@@ -70,4 +69,10 @@ int _printf(const char *format, ...)
 	va_end(args);
 
 	return (char_count);
+}
+
+int main()
+{
+	char *str = "some crazy men";
+	printf("a single character  %c", 'p');
 }
